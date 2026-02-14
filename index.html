@@ -3,62 +3,86 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ipshita Deb — An Invitation</title>
+  <title>An Invitation — Ipshita Deb</title>
 
+  <!-- Elegant + clean fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg0:#fff8fb;
-      --bg1:#fff;
-      --ink:#171717;
-      --muted:#5d5d5d;
-      --rose:#a61b4d;
+      --ink:#141414;
+      --muted:#595959;
+      --rose:#9b1748;
       --rose2:#ff6b93;
-      --line:rgba(0,0,0,.08);
-      --glass:rgba(255,255,255,.72);
-      --shadow: 0 22px 70px rgba(0,0,0,.12);
+      --card: rgba(255,255,255,.70);
+      --stroke: rgba(155,23,72,.14);
+      --line: rgba(0,0,0,.08);
+      --shadow: 0 26px 80px rgba(0,0,0,.14);
     }
+
     *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
       min-height:100vh;
       display:grid;
       place-items:center;
-      background:
-        radial-gradient(1100px 700px at 20% 15%, rgba(255,107,147,.14), transparent 55%),
-        radial-gradient(900px 600px at 85% 90%, rgba(166,27,77,.10), transparent 55%),
-        linear-gradient(140deg, var(--bg1), var(--bg0));
-      color:var(--ink);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
       overflow:hidden;
+
+      /* Aesthetic background: layered gradients */
+      background:
+        radial-gradient(1100px 700px at 14% 18%, rgba(255,107,147,.22), transparent 56%),
+        radial-gradient(950px 680px at 86% 82%, rgba(155,23,72,.14), transparent 58%),
+        radial-gradient(700px 500px at 62% 22%, rgba(255,212,226,.35), transparent 60%),
+        linear-gradient(140deg, #ffffff, #fff6fb);
     }
 
-    /* subtle floating particles */
-    .float{ position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden; }
-    .p{
+    /* subtle grain overlay */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.10;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      mix-blend-mode:multiply;
+    }
+
+    /* floating marks (very subtle) */
+    .float{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      overflow:hidden;
+    }
+    .mark{
       position:absolute;
-      bottom:-30px;
-      opacity:.20;
+      bottom:-40px;
+      opacity:.18;
       animation: rise linear forwards;
-      filter: drop-shadow(0 10px 18px rgba(166,27,77,.10));
+      filter: drop-shadow(0 14px 22px rgba(155,23,72,.10));
       user-select:none;
+      will-change: transform, opacity;
     }
     @keyframes rise{
       from{ transform: translateY(0) translateX(0) scale(.95); }
-      to{ transform: translateY(-120vh) translateX(var(--drift)) scale(1.12); opacity:0; }
+      to{ transform: translateY(-120vh) translateX(var(--drift)) scale(1.10); opacity:0; }
     }
 
     .card{
-      width:min(640px, 92vw);
-      border-radius:26px;
-      background:var(--glass);
-      backdrop-filter: blur(12px);
+      width:min(680px, 92vw);
+      border-radius:28px;
+      background:var(--card);
+      border:1px solid var(--stroke);
+      backdrop-filter: blur(14px);
       box-shadow: var(--shadow);
-      border: 1px solid rgba(166,27,77,.14);
-      padding: 28px 26px 20px;
+      padding: 30px 28px 22px;
       position:relative;
     }
 
@@ -68,115 +92,134 @@
       justify-content:space-between;
       gap:12px;
       flex-wrap:wrap;
-      margin-bottom:14px;
+      margin-bottom: 14px;
     }
-    .stamp{
+
+    .pill{
       display:inline-flex;
       align-items:center;
       gap:10px;
       padding:8px 12px;
       border-radius:999px;
-      border:1px solid rgba(166,27,77,.16);
-      background: rgba(166,27,77,.05);
+      border:1px solid rgba(155,23,72,.16);
+      background: rgba(155,23,72,.05);
       font-weight:600;
-      color: var(--muted);
+      color: rgba(20,20,20,.70);
       font-size:13px;
       letter-spacing:.02em;
     }
-    .seal{
+    .dot{
       width:10px;height:10px;border-radius:50%;
       background: linear-gradient(135deg, var(--rose), var(--rose2));
-      box-shadow: 0 0 0 6px rgba(166,27,77,.10);
+      box-shadow: 0 0 0 6px rgba(155,23,72,.10);
     }
+
     .meta{
       font-size:13px;
-      color: rgba(23,23,23,.62);
+      color: rgba(20,20,20,.60);
+      white-space:nowrap;
     }
 
     h1{
       margin: 14px 0 8px;
       font-family: "Playfair Display", ui-serif, Georgia, serif;
-      font-size: clamp(30px, 4.5vw, 48px);
+      font-size: clamp(30px, 4.6vw, 52px);
       letter-spacing:-.02em;
-      line-height:1.06;
+      line-height:1.05;
     }
+
     .lead{
-      margin: 0 0 16px;
+      margin: 0 0 18px;
       color: var(--muted);
-      font-size:16px;
-      line-height:1.55;
-      max-width: 58ch;
+      font-size: 16.5px;
+      line-height:1.6;
+      max-width: 64ch;
     }
 
     .invite{
-      margin:16px 0 16px;
-      padding:16px 16px;
-      border-radius:18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.65);
+      background: rgba(255,255,255,.64);
+      border:1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px 16px;
+      margin: 18px 0 14px;
     }
-    .row{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:baseline;
-      justify-content:space-between;
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 14px;
     }
-    .k{ color: rgba(23,23,23,.55); font-size:13px; letter-spacing:.02em; }
-    .v{ font-weight:700; }
-    .v .accent{ color: var(--rose); }
+    @media (max-width:560px){
+      .grid{ grid-template-columns: 1fr; }
+      .meta{ white-space:normal; }
+    }
+
+    .k{
+      font-size:12.5px;
+      color: rgba(20,20,20,.55);
+      letter-spacing:.03em;
+    }
+    .v{
+      margin-top:4px;
+      font-weight:700;
+      color: rgba(20,20,20,.92);
+    }
+    .accent{ color: var(--rose); }
 
     .btns{
       position:relative;
       display:flex;
-      justify-content:center;
       gap:12px;
+      justify-content:center;
       flex-wrap:wrap;
-      min-height:62px;
-      margin-top: 6px;
+      min-height: 66px;
+      margin-top: 8px;
     }
 
     button{
       border:none;
-      border-radius:16px;
-      padding:14px 18px;
-      font-weight:700;
-      font-size:16px;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-weight: 800;
+      font-size: 16px;
       cursor:pointer;
-      box-shadow: 0 12px 30px rgba(0,0,0,.10);
-      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      box-shadow: 0 14px 34px rgba(0,0,0,.12);
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
     button:active{ transform: translateY(1px) scale(.99); }
 
     #yes{
-      color:white;
+      color:#fff;
       background: linear-gradient(135deg, var(--rose), var(--rose2));
     }
-    #yes:hover{ transform: translateY(-1px); box-shadow: 0 18px 44px rgba(166,27,77,.26); }
+    #yes:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 20px 50px rgba(155,23,72,.28);
+    }
 
     #no{
-      background: rgba(23,23,23,.06);
+      background: rgba(20,20,20,.06);
       color: var(--ink);
       position:relative;
     }
 
     .fine{
-      margin-top:14px;
-      font-size:13px;
-      color: rgba(23,23,23,.55);
+      margin-top: 14px;
       text-align:center;
+      font-size: 13px;
+      color: rgba(20,20,20,.56);
     }
 
     .toast{
       position:absolute;
       left:16px; right:16px; bottom:14px;
       background:#fff;
-      border-radius:18px;
+      border-radius: 18px;
       border:1px solid rgba(0,0,0,.06);
-      box-shadow: 0 18px 55px rgba(0,0,0,.14);
-      padding:14px 14px;
+      box-shadow: 0 18px 58px rgba(0,0,0,.16);
+      padding: 14px 14px;
       transform: translateY(14px);
       opacity:0;
       pointer-events:none;
@@ -186,20 +229,22 @@
     .toast b{ color: var(--rose); }
 
     .sig{
-      margin-top: 6px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,.06);
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      color: rgba(23,23,23,.58);
-      font-size:13px;
-      border-top: 1px solid rgba(0,0,0,.06);
-      padding-top: 12px;
+      color: rgba(20,20,20,.60);
+      font-size: 13px;
+      flex-wrap:wrap;
     }
     .sig .line{
       flex:1;
       height:1px;
       background: rgba(0,0,0,.06);
+      min-width: 80px;
     }
   </style>
 </head>
@@ -207,124 +252,132 @@
 <body>
   <div class="float" id="float"></div>
 
-  <main class="card" id="card">
+  <main class="card" id="card" role="main" aria-label="Valentine invitation card">
     <div class="top">
-      <div class="stamp"><span class="seal"></span> an invitation, respectfully delivered</div>
-      <div class="meta" id="meta">For: Ipshita Deb</div>
+      <div class="pill"><span class="dot"></span> an invitation, delivered with good taste</div>
+      <div class="meta" id="meta">For: Ipshita Deb • Feb 14</div>
     </div>
 
-    <h1 id="headline">Ipshita Deb,</h1>
-    <p class="lead" id="lead">
+    <h1>Ipshita Deb,</h1>
+
+    <p class="lead">
       I’d like to take you out for Valentine’s Day.
-      I have prepared a plan that is equal parts <span style="color:var(--rose); font-weight:700;">classy</span> and
-      <span style="color:var(--rose); font-weight:700;">fun</span> — and only mildly embarrassing for me.
+      The plan is simple: <span class="accent" style="font-weight:700;">classy</span>,
+      a little <span class="accent" style="font-weight:700;">funny</span>,
+      and very much <span class="accent" style="font-weight:700;">you</span>.
+      <br><br>
     </p>
 
     <section class="invite" aria-label="Invitation details">
-      <div class="row" style="margin-bottom:8px;">
+      <div class="grid">
         <div>
           <div class="k">Occasion</div>
           <div class="v">Valentine’s Day</div>
         </div>
         <div>
           <div class="k">Agenda</div>
-          <div class="v"><span class="accent" id="agenda">Dinner → dessert → a walk (if it feels right)</span></div>
+          <div class="v"><span class="accent" id="agenda">Dinner → drinks → cuddlu</span></div>
         </div>
-      </div>
-      <div class="row">
         <div>
           <div class="k">Dress code</div>
           <div class="v">Whatever makes you feel like <span class="accent">you</span></div>
         </div>
         <div>
           <div class="k">RSVP</div>
-          <div class="v">Choose wisely (I’m fragile)</div>
+          <div class="v">Your choice. My hopes. No pressure. (Some pressure.)</div>
         </div>
       </div>
     </section>
 
     <div class="btns" id="btnRow">
-      <button id="yes">Yes 💖</button>
-      <button id="no">No 🙈</button>
+      <button id="yes">Yes — let’s do it 💖</button>
+      <button id="no" aria-label="No">No 🙈</button>
     </div>
 
-    <div class="fine" id="fine">Note: the “No” option is included for legal realism.</div>
+    <div class="fine">The “No” button is present for decorum. It will not be taking questions.</div>
 
-    <div class="toast" id="toast"></div>
+    <div class="toast" id="toast" aria-live="polite"></div>
 
     <div class="sig">
       <span id="signoff">— yours, with excellent intentions</span>
       <span class="line" aria-hidden="true"></span>
-      <span id="from">From: (your name)</span>
+      <span id="from">From: Your Name</span>
     </div>
   </main>
 
   <script>
-    // ---- Personalize these ----
-    const FROM_NAME = "Your Name";
-    const AGENDA = "Dinner → dessert → a walk (if it feels right)";
-    const META_DATE = "February 14";
-    // ---------------------------
+    // =======================
+    // PERSONALIZE THESE LINES
+    // =======================
+    const FROM_NAME = "Dinesh Pant";
+    const META_DATE = "Feb 14";
+    const AGENDA = "Dinner → drinks → cuddlu";
+    // =======================
 
     document.getElementById("from").textContent = `From: ${FROM_NAME}`;
-    document.getElementById("agenda").textContent = AGENDA;
     document.getElementById("meta").textContent = `For: Ipshita Deb • ${META_DATE}`;
+    document.getElementById("agenda").textContent = AGENDA;
 
-    // background particles: restrained, not “kawaii chaos”
+    // Background marks: subtle + aesthetic
     const float = document.getElementById("float");
-    const marks = ["♡","♥","✨","❦"]; // classy-ish
-    function spawn(){
+    const marks = ["♡","♥","✨","❦","⋆","✶"];
+    function spawnMark(){
       const el = document.createElement("div");
-      el.className = "p";
+      el.className = "mark";
       el.textContent = marks[Math.floor(Math.random()*marks.length)];
       el.style.left = (Math.random()*100) + "vw";
-      const dur = 8 + Math.random()*7;
+      const dur = 9 + Math.random()*8;
       el.style.animationDuration = dur + "s";
-      el.style.setProperty("--drift", (Math.random()*140 - 70) + "px");
+      el.style.setProperty("--drift", (Math.random()*160 - 80) + "px");
       el.style.fontSize = (14 + Math.random()*18) + "px";
       float.appendChild(el);
-      setTimeout(()=> el.remove(), dur*1000);
+      setTimeout(() => el.remove(), dur * 1000);
     }
-    setInterval(spawn, 650);
-    for(let i=0;i<10;i++) setTimeout(spawn, i*250);
+    setInterval(spawnMark, 700);
+    for (let i=0;i<9;i++) setTimeout(spawnMark, i*260);
 
     const card = document.getElementById("card");
     const toast = document.getElementById("toast");
     const yes = document.getElementById("yes");
     const no = document.getElementById("no");
+    const row = document.getElementById("btnRow");
 
     function showToast(html){
       toast.innerHTML = html;
       toast.classList.add("show");
-      setTimeout(()=> toast.classList.remove("show"), 2600);
+      setTimeout(() => toast.classList.remove("show"), 2600);
     }
 
+    // YES: warm, confident
     yes.addEventListener("click", () => {
       card.animate(
         [{ transform:"scale(1)" }, { transform:"scale(1.015)" }, { transform:"scale(1)" }],
         { duration: 260, easing:"ease-out" }
       );
-      showToast(`Excellent judgment. 😌💖<br><b>Confirmed:</b> ${AGENDA}<br><span style="opacity:.75">I’ll handle details. You just show up and be Ipshita.</span>`);
+      showToast(`Excellent choice. 😌💖<br><b>Confirmed:</b> ${AGENDA}<br><span style="opacity:.75">I’ll handle the details. You just show up and be Ipshita.</span>`);
     });
 
-    // Witty dodge: not frantic; “no” gets politely re-filed.
+    // NO: instantly escapes + witty quips
     const quips = [
-      "Duly noted. I will pretend this was a test and I passed.",
-      "That’s bold. I respect it. I will ignore it.",
-      "I see. We’re choosing suspense as a lifestyle.",
-      "Objection, your honor: my feelings are currently on the stand.",
-      "Interesting. Please submit that answer in writing to the Compliments Department.",
-      "No? Okay. Counteroffer: yes, but with dramatic eye contact."
+      "A compelling argument. Unfortunately, I’m not accepting submissions at this time.",
+      "Noted. Forwarded to my Denial Processing Department (it’s overwhelmed).",
+      "Bold. Elegant. Incorrect.",
+      "That answer has been respectfully… misplaced.",
+      "I see we’re choosing suspense. Very literary of you.",
+      "Counterproposal: you say yes, and I act normal. Briefly."
     ];
 
-    function dodge(){
-      const row = document.getElementById("btnRow");
+    function escapeNoButton(){
       const r = row.getBoundingClientRect();
       const pad = 10;
-      const maxX = r.width - no.offsetWidth - pad;
-      const maxY = r.height - no.offsetHeight - pad;
 
-      // if tight space (mobile), shake + quip rather than teleporting
+      const bw = no.offsetWidth;
+      const bh = no.offsetHeight;
+
+      const maxX = r.width - bw - pad;
+      const maxY = r.height - bh - pad;
+
+      // If tight space (mobile), shake + quip rather than teleporting
       if (maxX < 12 || maxY < 12){
         no.animate(
           [{ transform:"translateX(0)" }, { transform:"translateX(-7px)" }, { transform:"translateX(7px)" }, { transform:"translateX(0)" }],
@@ -334,14 +387,28 @@
         return;
       }
 
+      // Ensure absolute positioning is relative to the row container
+      row.style.position = "relative";
       no.style.position = "absolute";
-      no.style.left = (Math.random()*maxX) + "px";
-      no.style.top  = (Math.random()*maxY) + "px";
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      no.style.left = x + "px";
+      no.style.top  = y + "px";
+
       showToast(quips[Math.floor(Math.random()*quips.length)]);
     }
 
-    no.addEventListener("mouseenter", dodge);
-    no.addEventListener("touchstart", (e) => { e.preventDefault(); dodge(); }, { passive:false });
+    // Escape the moment you hover it
+    no.addEventListener("mouseenter", escapeNoButton);
+    // If someone tries to "chase" it
+    no.addEventListener("mousemove", escapeNoButton);
+    // Mobile attempt
+    no.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      escapeNoButton();
+    }, { passive:false });
   </script>
 </body>
 </html>
