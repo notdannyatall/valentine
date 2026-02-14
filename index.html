@@ -305,7 +305,7 @@
         </div>
         <div>
           <div class="k">Agenda</div>
-          <div class="v"><span class="accent" id="agenda">Dinner → drinks → cuddlu</span></div>
+          <div class="v"><span class="accent" id="agenda">Dinner → dessert → a walk (if it feels right)</span></div>
         </div>
         <div>
           <div class="k">Dress code</div>
@@ -338,9 +338,9 @@
     // =======================
     // PERSONALIZE THESE LINES
     // =======================
-    const FROM_NAME = "Bubs";
+    const FROM_NAME = "Your Name";
     const META_DATE = "Feb 14";
-    const AGENDA = "Dinner → drinks → cuddlu";
+    const AGENDA = "Dinner → dessert → a walk (if it feels right)";
     // =======================
 
     document.getElementById("from").textContent = `From: ${FROM_NAME}`;
@@ -386,7 +386,7 @@
       showToast(`Excellent choice. 😌💖<br><b>Confirmed:</b> ${AGENDA}<br><span style="opacity:.72">I'll handle the details. You just show up and be Ipshita.</span>`);
     });
 
-    // NO: escapes with witty quips - dodges across entire page
+    // NO: escapes smoothly from cursor - cannot be caught!
     const quips = [
       "A compelling argument. Unfortunately, I'm not accepting submissions at this time.",
       "Noted. Forwarded to my Denial Processing Department (it's overwhelmed).",
@@ -397,78 +397,96 @@
     ];
 
     // Initialize "No" button position
+    let noX, noY;
     function initNoButton(){
       const rect = yes.getBoundingClientRect();
-      no.style.left = (rect.right + 12) + "px";
-      no.style.top = rect.top + "px";
+      noX = rect.right + 12;
+      noY = rect.top;
+      no.style.left = noX + "px";
+      no.style.top = noY + "px";
+      no.style.transition = "left 0.3s ease-out, top 0.3s ease-out";
     }
     initNoButton();
     window.addEventListener('resize', initNoButton);
 
-    function escapeNoButton(e){
-      e.preventDefault();
+    const FLEE_DISTANCE = 200; // Distance to maintain from cursor
+    const BOUNDARY_PADDING = 20;
+    let lastQuipTime = 0;
+
+    // Continuously track mouse and move button away
+    document.addEventListener("mousemove", (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
       
       const bw = no.offsetWidth;
       const bh = no.offsetHeight;
-      const pad = 20;
 
-      // Calculate available space across entire viewport
-      const maxX = window.innerWidth - bw - pad * 2;
-      const maxY = window.innerHeight - bh - pad * 2;
-
-      // Get current mouse/touch position to avoid it
-      let mouseX, mouseY;
-      if (e.type === 'touchstart' && e.touches) {
-        mouseX = e.touches[0].clientX;
-        mouseY = e.touches[0].clientY;
-      } else {
-        mouseX = e.clientX || window.innerWidth / 2;
-        mouseY = e.clientY || window.innerHeight / 2;
-      }
-
-      // Generate random position that's far from cursor
-      let x, y;
-      let attempts = 0;
-      do {
-        x = pad + Math.random() * maxX;
-        y = pad + Math.random() * maxY;
-        attempts++;
-      } while (
-        attempts < 10 && 
-        Math.abs(x - mouseX) < 150 && 
-        Math.abs(y - mouseY) < 150
-      );
-
-      // Position the button
-      no.style.left = x + "px";
-      no.style.top = y + "px";
-
-      showToast(quips[Math.floor(Math.random()*quips.length)]);
-    }
-
-    // Escape on hover
-    no.addEventListener("mouseenter", escapeNoButton);
-    
-    // Track mouse movement near the button
-    let isNearButton = false;
-    document.addEventListener("mousemove", (e) => {
-      const rect = no.getBoundingClientRect();
-      const distance = Math.sqrt(
-        Math.pow(e.clientX - (rect.left + rect.width/2), 2) + 
-        Math.pow(e.clientY - (rect.top + rect.height/2), 2)
-      );
+      // Calculate distance from cursor to button center
+      const buttonCenterX = noX + bw / 2;
+      const buttonCenterY = noY + bh / 2;
       
-      // If cursor gets within 80px, dodge!
-      if (distance < 80 && !isNearButton) {
-        isNearButton = true;
-        escapeNoButton(e);
-        setTimeout(() => isNearButton = false, 300);
+      const dx = buttonCenterX - mouseX;
+      const dy = buttonCenterY - mouseY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      // If cursor is too close, move button away
+      if (distance < FLEE_DISTANCE) {
+        // Calculate direction away from cursor
+        const angle = Math.atan2(dy, dx);
+        
+        // Move button in opposite direction
+        const moveDistance = FLEE_DISTANCE - distance + 50;
+        let newX = noX + Math.cos(angle) * moveDistance * 0.5;
+        let newY = noY + Math.sin(angle) * moveDistance * 0.5;
+
+        // Keep within viewport bounds
+        const maxX = window.innerWidth - bw - BOUNDARY_PADDING;
+        const maxY = window.innerHeight - bh - BOUNDARY_PADDING;
+        
+        newX = Math.max(BOUNDARY_PADDING, Math.min(newX, maxX));
+        newY = Math.max(BOUNDARY_PADDING, Math.min(newY, maxY));
+
+        noX = newX;
+        noY = newY;
+
+        no.style.left = noX + "px";
+        no.style.top = noY + "px";
+
+        // Show quip occasionally (not too spammy)
+        const now = Date.now();
+        if (now - lastQuipTime > 2000) {
+          showToast(quips[Math.floor(Math.random() * quips.length)]);
+          lastQuipTime = now;
+        }
       }
     });
-    
-    // Escape on touch/click
-    no.addEventListener("touchstart", escapeNoButton, { passive:false });
-    no.addEventListener("click", escapeNoButton);
+
+    // Handle touch events for mobile
+    document.addEventListener("touchmove", (e) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent("mousemove", {
+          clientX: touch.clientX,
+          clientY: touch.clientY
+        });
+        document.dispatchEvent(mouseEvent);
+      }
+    }, { passive: true });
+
+    // If they somehow click it (they won't), teleport far away
+    no.addEventListener("click", (e) => {
+      e.preventDefault();
+      const maxX = window.innerWidth - no.offsetWidth - BOUNDARY_PADDING;
+      const maxY = window.innerHeight - no.offsetHeight - BOUNDARY_PADDING;
+      
+      noX = BOUNDARY_PADDING + Math.random() * maxX;
+      noY = BOUNDARY_PADDING + Math.random() * maxY;
+      
+      no.style.left = noX + "px";
+      no.style.top = noY + "px";
+      
+      showToast(quips[Math.floor(Math.random() * quips.length)]);
+    });
   </script>
 </body>
 </html>
