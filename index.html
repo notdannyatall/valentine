@@ -16,10 +16,10 @@
       --muted:#595959;
       --rose:#9b1748;
       --rose2:#ff6b93;
-      --card: rgba(255,255,255,.70);
-      --stroke: rgba(155,23,72,.14);
+      --card: rgba(255,255,255,.75);
+      --stroke: rgba(155,23,72,.12);
       --line: rgba(0,0,0,.08);
-      --shadow: 0 26px 80px rgba(0,0,0,.14);
+      --shadow: 0 24px 70px rgba(0,0,0,.12);
     }
 
     *{ box-sizing:border-box; }
@@ -32,28 +32,29 @@
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--ink);
       overflow:hidden;
+      padding: 20px;
 
-      /* Aesthetic background: layered gradients */
+      /* Beautiful layered gradients */
       background:
-        radial-gradient(1100px 700px at 14% 18%, rgba(255,107,147,.22), transparent 56%),
-        radial-gradient(950px 680px at 86% 82%, rgba(155,23,72,.14), transparent 58%),
-        radial-gradient(700px 500px at 62% 22%, rgba(255,212,226,.35), transparent 60%),
+        radial-gradient(1100px 700px at 14% 18%, rgba(255,107,147,.20), transparent 56%),
+        radial-gradient(950px 680px at 86% 82%, rgba(155,23,72,.12), transparent 58%),
+        radial-gradient(700px 500px at 62% 22%, rgba(255,212,226,.32), transparent 60%),
         linear-gradient(140deg, #ffffff, #fff6fb);
     }
 
-    /* subtle grain overlay */
+    /* subtle grain texture */
     body::before{
       content:"";
       position:fixed;
       inset:0;
       pointer-events:none;
-      opacity:.10;
+      opacity:.08;
       background-image:
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
       mix-blend-mode:multiply;
     }
 
-    /* floating marks (very subtle) */
+    /* floating hearts (subtle + aesthetic) */
     .float{
       position:fixed;
       inset:0;
@@ -64,26 +65,30 @@
     .mark{
       position:absolute;
       bottom:-40px;
-      opacity:.18;
+      opacity:.15;
       animation: rise linear forwards;
-      filter: drop-shadow(0 14px 22px rgba(155,23,72,.10));
+      filter: drop-shadow(0 12px 20px rgba(155,23,72,.08));
       user-select:none;
       will-change: transform, opacity;
     }
     @keyframes rise{
       from{ transform: translateY(0) translateX(0) scale(.95); }
-      to{ transform: translateY(-120vh) translateX(var(--drift)) scale(1.10); opacity:0; }
+      to{ transform: translateY(-120vh) translateX(var(--drift)) scale(1.08); opacity:0; }
     }
 
     .card{
-      width:min(680px, 92vw);
-      border-radius:28px;
+      width:min(680px, 100%);
+      border-radius:24px;
       background:var(--card);
       border:1px solid var(--stroke);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       box-shadow: var(--shadow);
-      padding: 30px 28px 22px;
+      padding: 36px 32px 28px;
       position:relative;
+    }
+
+    @media (max-width:560px){
+      .card{ padding: 28px 24px 22px; }
     }
 
     .top{
@@ -92,62 +97,62 @@
       justify-content:space-between;
       gap:12px;
       flex-wrap:wrap;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .pill{
       display:inline-flex;
       align-items:center;
       gap:10px;
-      padding:8px 12px;
+      padding:7px 13px;
       border-radius:999px;
-      border:1px solid rgba(155,23,72,.16);
-      background: rgba(155,23,72,.05);
+      border:1px solid rgba(155,23,72,.14);
+      background: rgba(155,23,72,.04);
       font-weight:600;
-      color: rgba(20,20,20,.70);
+      color: rgba(20,20,20,.68);
       font-size:13px;
-      letter-spacing:.02em;
+      letter-spacing:.01em;
     }
     .dot{
-      width:10px;height:10px;border-radius:50%;
+      width:9px;height:9px;border-radius:50%;
       background: linear-gradient(135deg, var(--rose), var(--rose2));
-      box-shadow: 0 0 0 6px rgba(155,23,72,.10);
+      box-shadow: 0 0 0 5px rgba(155,23,72,.08);
     }
 
     .meta{
       font-size:13px;
-      color: rgba(20,20,20,.60);
+      color: rgba(20,20,20,.58);
       white-space:nowrap;
     }
 
     h1{
-      margin: 14px 0 8px;
+      margin: 16px 0 10px;
       font-family: "Playfair Display", ui-serif, Georgia, serif;
-      font-size: clamp(30px, 4.6vw, 52px);
+      font-size: clamp(32px, 4.8vw, 50px);
       letter-spacing:-.02em;
-      line-height:1.05;
+      line-height:1.1;
     }
 
     .lead{
-      margin: 0 0 18px;
+      margin: 0 0 20px;
       color: var(--muted);
       font-size: 16.5px;
-      line-height:1.6;
+      line-height:1.65;
       max-width: 64ch;
     }
 
     .invite{
-      background: rgba(255,255,255,.64);
+      background: rgba(255,255,255,.60);
       border:1px solid var(--line);
-      border-radius: 20px;
-      padding: 16px 16px;
-      margin: 18px 0 14px;
+      border-radius: 18px;
+      padding: 20px 18px;
+      margin: 20px 0 16px;
     }
 
     .grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px 14px;
+      gap: 14px 16px;
     }
     @media (max-width:560px){
       .grid{ grid-template-columns: 1fr; }
@@ -156,13 +161,13 @@
 
     .k{
       font-size:12.5px;
-      color: rgba(20,20,20,.55);
-      letter-spacing:.03em;
+      color: rgba(20,20,20,.54);
+      letter-spacing:.02em;
     }
     .v{
-      margin-top:4px;
+      margin-top:5px;
       font-weight:700;
-      color: rgba(20,20,20,.92);
+      color: rgba(20,20,20,.90);
     }
     .accent{ color: var(--rose); }
 
@@ -172,79 +177,101 @@
       gap:12px;
       justify-content:center;
       flex-wrap:wrap;
-      min-height: 66px;
-      margin-top: 8px;
+      min-height: 60px;
+      margin-top: 10px;
     }
 
     button{
       border:none;
-      border-radius: 16px;
-      padding: 14px 18px;
-      font-weight: 800;
-      font-size: 16px;
+      border-radius: 14px;
+      padding: 13px 22px;
+      font-weight: 700;
+      font-size: 15.5px;
       cursor:pointer;
-      box-shadow: 0 14px 34px rgba(0,0,0,.12);
-      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      box-shadow: 0 12px 32px rgba(0,0,0,.10);
+      transition: transform .14s ease, box-shadow .14s ease;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
-    button:active{ transform: translateY(1px) scale(.99); }
+    button:active{ transform: translateY(1px) scale(.98); }
 
     #yes{
       color:#fff;
       background: linear-gradient(135deg, var(--rose), var(--rose2));
     }
     #yes:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 20px 50px rgba(155,23,72,.28);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 46px rgba(155,23,72,.24);
     }
 
     #no{
-      background: rgba(20,20,20,.06);
+      background: #fff;
       color: var(--ink);
-      position:relative;
+      border: 1px solid var(--line);
+      position:fixed;
+      z-index: 1000;
+    }
+    #no:hover{
+      background: #f9f9f9;
     }
 
     .fine{
-      margin-top: 14px;
+      margin-top: 16px;
       text-align:center;
       font-size: 13px;
-      color: rgba(20,20,20,.56);
+      color: rgba(20,20,20,.54);
     }
 
     .toast{
-      position:absolute;
-      left:16px; right:16px; bottom:14px;
+      position:fixed;
+      left:50%;
+      bottom:32px;
+      transform: translateX(-50%) translateY(16px);
       background:#fff;
-      border-radius: 18px;
+      border-radius: 16px;
       border:1px solid rgba(0,0,0,.06);
-      box-shadow: 0 18px 58px rgba(0,0,0,.16);
-      padding: 14px 14px;
-      transform: translateY(14px);
+      box-shadow: 0 16px 50px rgba(0,0,0,.14);
+      padding: 15px 18px;
       opacity:0;
       pointer-events:none;
-      transition: .25s ease;
+      transition: .28s ease;
+      max-width: 88vw;
+      text-align: center;
+      font-size: 14.5px;
+      line-height: 1.5;
     }
-    .toast.show{ transform: translateY(0); opacity:1; }
+    .toast.show{ 
+      transform: translateX(-50%) translateY(0); 
+      opacity:1; 
+    }
     .toast b{ color: var(--rose); }
 
     .sig{
-      margin-top: 12px;
-      padding-top: 12px;
+      margin-top: 14px;
+      padding-top: 14px;
       border-top: 1px solid rgba(0,0,0,.06);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:10px;
-      color: rgba(20,20,20,.60);
+      gap:12px;
+      color: rgba(20,20,20,.58);
       font-size: 13px;
       flex-wrap:wrap;
     }
     .sig .line{
       flex:1;
       height:1px;
-      background: rgba(0,0,0,.06);
-      min-width: 80px;
+      background: rgba(0,0,0,.05);
+      min-width: 70px;
+    }
+
+    @media (max-width:560px){
+      .sig{ 
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .sig .line{ display: none; }
     }
   </style>
 </head>
@@ -254,29 +281,31 @@
 
   <main class="card" id="card" role="main" aria-label="Valentine invitation card">
     <div class="top">
-      <div class="pill"><span class="dot"></span> an invitation, delivered with good taste</div>
+      <div class="pill"><span class="dot"></span> an invitation, delivered with care</div>
       <div class="meta" id="meta">For: Ipshita Deb • Feb 14</div>
     </div>
 
-    <h1>Ipshita Deb,</h1>
+    <h1>Ipshita,</h1>
 
     <p class="lead">
-      I’d like to take you out for Valentine’s Day.
+      I'd like to take you out for Valentine's Day.
       The plan is simple: <span class="accent" style="font-weight:700;">classy</span>,
       a little <span class="accent" style="font-weight:700;">funny</span>,
       and very much <span class="accent" style="font-weight:700;">you</span>.
       <br><br>
+      I will, of course, pretend I'm completely composed while asking you this.
+      (I am not.)
     </p>
 
     <section class="invite" aria-label="Invitation details">
       <div class="grid">
         <div>
           <div class="k">Occasion</div>
-          <div class="v">Valentine’s Day</div>
+          <div class="v">Valentine's Day</div>
         </div>
         <div>
           <div class="k">Agenda</div>
-          <div class="v"><span class="accent" id="agenda">Dinner → drinks → cuddlu</span></div>
+          <div class="v"><span class="accent" id="agenda">Dinner → dessert → a walk (if it feels right)</span></div>
         </div>
         <div>
           <div class="k">Dress code</div>
@@ -290,11 +319,11 @@
     </section>
 
     <div class="btns" id="btnRow">
-      <button id="yes">Yes — let’s do it 💖</button>
+      <button id="yes">Yes — let's do it 💖</button>
       <button id="no" aria-label="No">No 🙈</button>
     </div>
 
-    <div class="fine">The “No” button is present for decorum. It will not be taking questions.</div>
+    <div class="fine">The "No" button is present for decorum. It will not be taking questions.</div>
 
     <div class="toast" id="toast" aria-live="polite"></div>
 
@@ -309,32 +338,32 @@
     // =======================
     // PERSONALIZE THESE LINES
     // =======================
-    const FROM_NAME = "Dinesh Pant";
+    const FROM_NAME = "Your Name";
     const META_DATE = "Feb 14";
-    const AGENDA = "Dinner → drinks → cuddlu";
+    const AGENDA = "Dinner → dessert → a walk (if it feels right)";
     // =======================
 
     document.getElementById("from").textContent = `From: ${FROM_NAME}`;
     document.getElementById("meta").textContent = `For: Ipshita Deb • ${META_DATE}`;
     document.getElementById("agenda").textContent = AGENDA;
 
-    // Background marks: subtle + aesthetic
+    // Background marks: subtle hearts + sparkles
     const float = document.getElementById("float");
-    const marks = ["♡","♥","✨","❦","⋆","✶"];
+    const marks = ["♡","♥","✨","❦","⋆"];
     function spawnMark(){
       const el = document.createElement("div");
       el.className = "mark";
       el.textContent = marks[Math.floor(Math.random()*marks.length)];
       el.style.left = (Math.random()*100) + "vw";
-      const dur = 9 + Math.random()*8;
+      const dur = 10 + Math.random()*7;
       el.style.animationDuration = dur + "s";
-      el.style.setProperty("--drift", (Math.random()*160 - 80) + "px");
-      el.style.fontSize = (14 + Math.random()*18) + "px";
+      el.style.setProperty("--drift", (Math.random()*140 - 70) + "px");
+      el.style.fontSize = (15 + Math.random()*16) + "px";
       float.appendChild(el);
       setTimeout(() => el.remove(), dur * 1000);
     }
-    setInterval(spawnMark, 700);
-    for (let i=0;i<9;i++) setTimeout(spawnMark, i*260);
+    setInterval(spawnMark, 800);
+    for (let i=0;i<8;i++) setTimeout(spawnMark, i*280);
 
     const card = document.getElementById("card");
     const toast = document.getElementById("toast");
@@ -345,70 +374,101 @@
     function showToast(html){
       toast.innerHTML = html;
       toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2600);
+      setTimeout(() => toast.classList.remove("show"), 2800);
     }
 
-    // YES: warm, confident
+    // YES: warm confirmation
     yes.addEventListener("click", () => {
       card.animate(
-        [{ transform:"scale(1)" }, { transform:"scale(1.015)" }, { transform:"scale(1)" }],
-        { duration: 260, easing:"ease-out" }
+        [{ transform:"scale(1)" }, { transform:"scale(1.012)" }, { transform:"scale(1)" }],
+        { duration: 280, easing:"ease-out" }
       );
-      showToast(`Excellent choice. 😌💖<br><b>Confirmed:</b> ${AGENDA}<br><span style="opacity:.75">I’ll handle the details. You just show up and be Ipshita.</span>`);
+      showToast(`Excellent choice. 😌💖<br><b>Confirmed:</b> ${AGENDA}<br><span style="opacity:.72">I'll handle the details. You just show up and be Ipshita.</span>`);
     });
 
-    // NO: instantly escapes + witty quips
+    // NO: escapes with witty quips - dodges across entire page
     const quips = [
-      "A compelling argument. Unfortunately, I’m not accepting submissions at this time.",
-      "Noted. Forwarded to my Denial Processing Department (it’s overwhelmed).",
+      "A compelling argument. Unfortunately, I'm not accepting submissions at this time.",
+      "Noted. Forwarded to my Denial Processing Department (it's overwhelmed).",
       "Bold. Elegant. Incorrect.",
       "That answer has been respectfully… misplaced.",
-      "I see we’re choosing suspense. Very literary of you.",
+      "I see we're choosing suspense. Very literary of you.",
       "Counterproposal: you say yes, and I act normal. Briefly."
     ];
 
-    function escapeNoButton(){
-      const r = row.getBoundingClientRect();
-      const pad = 10;
+    // Initialize "No" button position
+    function initNoButton(){
+      const rect = yes.getBoundingClientRect();
+      no.style.left = (rect.right + 12) + "px";
+      no.style.top = rect.top + "px";
+    }
+    initNoButton();
+    window.addEventListener('resize', initNoButton);
 
+    function escapeNoButton(e){
+      e.preventDefault();
+      
       const bw = no.offsetWidth;
       const bh = no.offsetHeight;
+      const pad = 20;
 
-      const maxX = r.width - bw - pad;
-      const maxY = r.height - bh - pad;
+      // Calculate available space across entire viewport
+      const maxX = window.innerWidth - bw - pad * 2;
+      const maxY = window.innerHeight - bh - pad * 2;
 
-      // If tight space (mobile), shake + quip rather than teleporting
-      if (maxX < 12 || maxY < 12){
-        no.animate(
-          [{ transform:"translateX(0)" }, { transform:"translateX(-7px)" }, { transform:"translateX(7px)" }, { transform:"translateX(0)" }],
-          { duration: 220, easing:"ease-in-out" }
-        );
-        showToast(quips[Math.floor(Math.random()*quips.length)]);
-        return;
+      // Get current mouse/touch position to avoid it
+      let mouseX, mouseY;
+      if (e.type === 'touchstart' && e.touches) {
+        mouseX = e.touches[0].clientX;
+        mouseY = e.touches[0].clientY;
+      } else {
+        mouseX = e.clientX || window.innerWidth / 2;
+        mouseY = e.clientY || window.innerHeight / 2;
       }
 
-      // Ensure absolute positioning is relative to the row container
-      row.style.position = "relative";
-      no.style.position = "absolute";
+      // Generate random position that's far from cursor
+      let x, y;
+      let attempts = 0;
+      do {
+        x = pad + Math.random() * maxX;
+        y = pad + Math.random() * maxY;
+        attempts++;
+      } while (
+        attempts < 10 && 
+        Math.abs(x - mouseX) < 150 && 
+        Math.abs(y - mouseY) < 150
+      );
 
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-
+      // Position the button
       no.style.left = x + "px";
-      no.style.top  = y + "px";
+      no.style.top = y + "px";
 
       showToast(quips[Math.floor(Math.random()*quips.length)]);
     }
 
-    // Escape the moment you hover it
+    // Escape on hover
     no.addEventListener("mouseenter", escapeNoButton);
-    // If someone tries to "chase" it
-    no.addEventListener("mousemove", escapeNoButton);
-    // Mobile attempt
-    no.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      escapeNoButton();
-    }, { passive:false });
+    
+    // Track mouse movement near the button
+    let isNearButton = false;
+    document.addEventListener("mousemove", (e) => {
+      const rect = no.getBoundingClientRect();
+      const distance = Math.sqrt(
+        Math.pow(e.clientX - (rect.left + rect.width/2), 2) + 
+        Math.pow(e.clientY - (rect.top + rect.height/2), 2)
+      );
+      
+      // If cursor gets within 80px, dodge!
+      if (distance < 80 && !isNearButton) {
+        isNearButton = true;
+        escapeNoButton(e);
+        setTimeout(() => isNearButton = false, 300);
+      }
+    });
+    
+    // Escape on touch/click
+    no.addEventListener("touchstart", escapeNoButton, { passive:false });
+    no.addEventListener("click", escapeNoButton);
   </script>
 </body>
 </html>
