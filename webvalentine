@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ipshita Deb — An Invitation</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#fff8fb;
+      --bg1:#fff;
+      --ink:#171717;
+      --muted:#5d5d5d;
+      --rose:#a61b4d;
+      --rose2:#ff6b93;
+      --line:rgba(0,0,0,.08);
+      --glass:rgba(255,255,255,.72);
+      --shadow: 0 22px 70px rgba(0,0,0,.12);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(1100px 700px at 20% 15%, rgba(255,107,147,.14), transparent 55%),
+        radial-gradient(900px 600px at 85% 90%, rgba(166,27,77,.10), transparent 55%),
+        linear-gradient(140deg, var(--bg1), var(--bg0));
+      color:var(--ink);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overflow:hidden;
+    }
+
+    /* subtle floating particles */
+    .float{ position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden; }
+    .p{
+      position:absolute;
+      bottom:-30px;
+      opacity:.20;
+      animation: rise linear forwards;
+      filter: drop-shadow(0 10px 18px rgba(166,27,77,.10));
+      user-select:none;
+    }
+    @keyframes rise{
+      from{ transform: translateY(0) translateX(0) scale(.95); }
+      to{ transform: translateY(-120vh) translateX(var(--drift)) scale(1.12); opacity:0; }
+    }
+
+    .card{
+      width:min(640px, 92vw);
+      border-radius:26px;
+      background:var(--glass);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(166,27,77,.14);
+      padding: 28px 26px 20px;
+      position:relative;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .stamp{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(166,27,77,.16);
+      background: rgba(166,27,77,.05);
+      font-weight:600;
+      color: var(--muted);
+      font-size:13px;
+      letter-spacing:.02em;
+    }
+    .seal{
+      width:10px;height:10px;border-radius:50%;
+      background: linear-gradient(135deg, var(--rose), var(--rose2));
+      box-shadow: 0 0 0 6px rgba(166,27,77,.10);
+    }
+    .meta{
+      font-size:13px;
+      color: rgba(23,23,23,.62);
+    }
+
+    h1{
+      margin: 14px 0 8px;
+      font-family: "Playfair Display", ui-serif, Georgia, serif;
+      font-size: clamp(30px, 4.5vw, 48px);
+      letter-spacing:-.02em;
+      line-height:1.06;
+    }
+    .lead{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size:16px;
+      line-height:1.55;
+      max-width: 58ch;
+    }
+
+    .invite{
+      margin:16px 0 16px;
+      padding:16px 16px;
+      border-radius:18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.65);
+    }
+    .row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:baseline;
+      justify-content:space-between;
+    }
+    .k{ color: rgba(23,23,23,.55); font-size:13px; letter-spacing:.02em; }
+    .v{ font-weight:700; }
+    .v .accent{ color: var(--rose); }
+
+    .btns{
+      position:relative;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      min-height:62px;
+      margin-top: 6px;
+    }
+
+    button{
+      border:none;
+      border-radius:16px;
+      padding:14px 18px;
+      font-weight:700;
+      font-size:16px;
+      cursor:pointer;
+      box-shadow: 0 12px 30px rgba(0,0,0,.10);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:active{ transform: translateY(1px) scale(.99); }
+
+    #yes{
+      color:white;
+      background: linear-gradient(135deg, var(--rose), var(--rose2));
+    }
+    #yes:hover{ transform: translateY(-1px); box-shadow: 0 18px 44px rgba(166,27,77,.26); }
+
+    #no{
+      background: rgba(23,23,23,.06);
+      color: var(--ink);
+      position:relative;
+    }
+
+    .fine{
+      margin-top:14px;
+      font-size:13px;
+      color: rgba(23,23,23,.55);
+      text-align:center;
+    }
+
+    .toast{
+      position:absolute;
+      left:16px; right:16px; bottom:14px;
+      background:#fff;
+      border-radius:18px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow: 0 18px 55px rgba(0,0,0,.14);
+      padding:14px 14px;
+      transform: translateY(14px);
+      opacity:0;
+      pointer-events:none;
+      transition: .25s ease;
+    }
+    .toast.show{ transform: translateY(0); opacity:1; }
+    .toast b{ color: var(--rose); }
+
+    .sig{
+      margin-top: 6px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      color: rgba(23,23,23,.58);
+      font-size:13px;
+      border-top: 1px solid rgba(0,0,0,.06);
+      padding-top: 12px;
+    }
+    .sig .line{
+      flex:1;
+      height:1px;
+      background: rgba(0,0,0,.06);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="float" id="float"></div>
+
+  <main class="card" id="card">
+    <div class="top">
+      <div class="stamp"><span class="seal"></span> an invitation, respectfully delivered</div>
+      <div class="meta" id="meta">For: Ipshita Deb</div>
+    </div>
+
+    <h1 id="headline">Ipshita Deb,</h1>
+    <p class="lead" id="lead">
+      I’d like to take you out for Valentine’s Day.
+      I have prepared a plan that is equal parts <span style="color:var(--rose); font-weight:700;">classy</span> and
+      <span style="color:var(--rose); font-weight:700;">fun</span> — and only mildly embarrassing for me.
+    </p>
+
+    <section class="invite" aria-label="Invitation details">
+      <div class="row" style="margin-bottom:8px;">
+        <div>
+          <div class="k">Occasion</div>
+          <div class="v">Valentine’s Day</div>
+        </div>
+        <div>
+          <div class="k">Agenda</div>
+          <div class="v"><span class="accent" id="agenda">Dinner → dessert → a walk (if it feels right)</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="k">Dress code</div>
+          <div class="v">Whatever makes you feel like <span class="accent">you</span></div>
+        </div>
+        <div>
+          <div class="k">RSVP</div>
+          <div class="v">Choose wisely (I’m fragile)</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="btns" id="btnRow">
+      <button id="yes">Yes 💖</button>
+      <button id="no">No 🙈</button>
+    </div>
+
+    <div class="fine" id="fine">Note: the “No” option is included for legal realism.</div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="sig">
+      <span id="signoff">— yours, with excellent intentions</span>
+      <span class="line" aria-hidden="true"></span>
+      <span id="from">From: (your name)</span>
+    </div>
+  </main>
+
+  <script>
+    // ---- Personalize these ----
+    const FROM_NAME = "Your Name";
+    const AGENDA = "Dinner → dessert → a walk (if it feels right)";
+    const META_DATE = "February 14";
+    // ---------------------------
+
+    document.getElementById("from").textContent = `From: ${FROM_NAME}`;
+    document.getElementById("agenda").textContent = AGENDA;
+    document.getElementById("meta").textContent = `For: Ipshita Deb • ${META_DATE}`;
+
+    // background particles: restrained, not “kawaii chaos”
+    const float = document.getElementById("float");
+    const marks = ["♡","♥","✨","❦"]; // classy-ish
+    function spawn(){
+      const el = document.createElement("div");
+      el.className = "p";
+      el.textContent = marks[Math.floor(Math.random()*marks.length)];
+      el.style.left = (Math.random()*100) + "vw";
+      const dur = 8 + Math.random()*7;
+      el.style.animationDuration = dur + "s";
+      el.style.setProperty("--drift", (Math.random()*140 - 70) + "px");
+      el.style.fontSize = (14 + Math.random()*18) + "px";
+      float.appendChild(el);
+      setTimeout(()=> el.remove(), dur*1000);
+    }
+    setInterval(spawn, 650);
+    for(let i=0;i<10;i++) setTimeout(spawn, i*250);
+
+    const card = document.getElementById("card");
+    const toast = document.getElementById("toast");
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
+
+    function showToast(html){
+      toast.innerHTML = html;
+      toast.classList.add("show");
+      setTimeout(()=> toast.classList.remove("show"), 2600);
+    }
+
+    yes.addEventListener("click", () => {
+      card.animate(
+        [{ transform:"scale(1)" }, { transform:"scale(1.015)" }, { transform:"scale(1)" }],
+        { duration: 260, easing:"ease-out" }
+      );
+      showToast(`Excellent judgment. 😌💖<br><b>Confirmed:</b> ${AGENDA}<br><span style="opacity:.75">I’ll handle details. You just show up and be Ipshita.</span>`);
+    });
+
+    // Witty dodge: not frantic; “no” gets politely re-filed.
+    const quips = [
+      "Duly noted. I will pretend this was a test and I passed.",
+      "That’s bold. I respect it. I will ignore it.",
+      "I see. We’re choosing suspense as a lifestyle.",
+      "Objection, your honor: my feelings are currently on the stand.",
+      "Interesting. Please submit that answer in writing to the Compliments Department.",
+      "No? Okay. Counteroffer: yes, but with dramatic eye contact."
+    ];
+
+    function dodge(){
+      const row = document.getElementById("btnRow");
+      const r = row.getBoundingClientRect();
+      const pad = 10;
+      const maxX = r.width - no.offsetWidth - pad;
+      const maxY = r.height - no.offsetHeight - pad;
+
+      // if tight space (mobile), shake + quip rather than teleporting
+      if (maxX < 12 || maxY < 12){
+        no.animate(
+          [{ transform:"translateX(0)" }, { transform:"translateX(-7px)" }, { transform:"translateX(7px)" }, { transform:"translateX(0)" }],
+          { duration: 220, easing:"ease-in-out" }
+        );
+        showToast(quips[Math.floor(Math.random()*quips.length)]);
+        return;
+      }
+
+      no.style.position = "absolute";
+      no.style.left = (Math.random()*maxX) + "px";
+      no.style.top  = (Math.random()*maxY) + "px";
+      showToast(quips[Math.floor(Math.random()*quips.length)]);
+    }
+
+    no.addEventListener("mouseenter", dodge);
+    no.addEventListener("touchstart", (e) => { e.preventDefault(); dodge(); }, { passive:false });
+  </script>
+</body>
+</html>
