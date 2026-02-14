@@ -210,6 +210,8 @@
       border: 1px solid var(--line);
       position:fixed;
       z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      will-change: left, top;
     }
     #no:hover{
       background: #f9f9f9;
@@ -305,7 +307,7 @@
         </div>
         <div>
           <div class="k">Agenda</div>
-          <div class="v"><span class="accent" id="agenda">Dinner → dessert → a walk (if it feels right)</span></div>
+          <div class="v"><span class="accent" id="agenda">Dinner → drinks → cuddlu</span></div>
         </div>
         <div>
           <div class="k">Dress code</div>
@@ -338,9 +340,9 @@
     // =======================
     // PERSONALIZE THESE LINES
     // =======================
-    const FROM_NAME = "Your Name";
+    const FROM_NAME = "Bubi";
     const META_DATE = "Feb 14";
-    const AGENDA = "Dinner → dessert → a walk (if it feels right)";
+    const AGENDA = "Dinner → drinks → cuddlu";
     // =======================
 
     document.getElementById("from").textContent = `From: ${FROM_NAME}`;
@@ -402,15 +404,23 @@
       const rect = yes.getBoundingClientRect();
       noX = rect.right + 12;
       noY = rect.top;
-      no.style.left = noX + "px";
-      no.style.top = noY + "px";
+      updateNoButtonPosition();
       no.style.transition = "left 0.3s ease-out, top 0.3s ease-out";
     }
+
+    function updateNoButtonPosition(){
+      no.style.left = noX + "px";
+      no.style.top = noY + "px";
+      no.style.display = "block";
+      no.style.opacity = "1";
+      no.style.visibility = "visible";
+    }
+
     initNoButton();
     window.addEventListener('resize', initNoButton);
 
     const FLEE_DISTANCE = 200; // Distance to maintain from cursor
-    const BOUNDARY_PADDING = 20;
+    const BOUNDARY_PADDING = 30;
     let lastQuipTime = 0;
 
     // Continuously track mouse and move button away
@@ -418,8 +428,16 @@
       const mouseX = e.clientX;
       const mouseY = e.clientY;
       
-      const bw = no.offsetWidth;
-      const bh = no.offsetHeight;
+      // Get current button dimensions
+      const rect = no.getBoundingClientRect();
+      const bw = rect.width || 100; // fallback width
+      const bh = rect.height || 40; // fallback height
+
+      // Use actual position from DOM if available
+      if (rect.left && rect.top) {
+        noX = rect.left;
+        noY = rect.top;
+      }
 
       // Calculate distance from cursor to button center
       const buttonCenterX = noX + bw / 2;
@@ -431,26 +449,39 @@
 
       // If cursor is too close, move button away
       if (distance < FLEE_DISTANCE) {
-        // Calculate direction away from cursor
+        // Calculate direction away from cursor (normalized)
         const angle = Math.atan2(dy, dx);
         
         // Move button in opposite direction
-        const moveDistance = FLEE_DISTANCE - distance + 50;
-        let newX = noX + Math.cos(angle) * moveDistance * 0.5;
-        let newY = noY + Math.sin(angle) * moveDistance * 0.5;
+        const moveDistance = (FLEE_DISTANCE - distance + 50) * 0.5;
+        let newX = noX + Math.cos(angle) * moveDistance;
+        let newY = noY + Math.sin(angle) * moveDistance;
 
-        // Keep within viewport bounds
+        // Keep within viewport bounds with padding
         const maxX = window.innerWidth - bw - BOUNDARY_PADDING;
         const maxY = window.innerHeight - bh - BOUNDARY_PADDING;
         
         newX = Math.max(BOUNDARY_PADDING, Math.min(newX, maxX));
         newY = Math.max(BOUNDARY_PADDING, Math.min(newY, maxY));
 
+        // If button hits edge, bounce it to center area
+        if (newX <= BOUNDARY_PADDING || newX >= maxX || 
+            newY <= BOUNDARY_PADDING || newY >= maxY) {
+          const centerX = window.innerWidth / 2 - bw / 2;
+          const centerY = window.innerHeight / 2 - bh / 2;
+          
+          // Move towards center but away from cursor
+          const toCenterX = centerX - newX;
+          const toCenterY = centerY - newY;
+          
+          newX = newX + toCenterX * 0.3;
+          newY = newY + toCenterY * 0.3;
+        }
+
         noX = newX;
         noY = newY;
 
-        no.style.left = noX + "px";
-        no.style.top = noY + "px";
+        updateNoButtonPosition();
 
         // Show quip occasionally (not too spammy)
         const now = Date.now();
@@ -473,18 +504,32 @@
       }
     }, { passive: true });
 
-    // If they somehow click it (they won't), teleport far away
+    // If they somehow click it (they won't), teleport to a safe distance
     no.addEventListener("click", (e) => {
       e.preventDefault();
-      const maxX = window.innerWidth - no.offsetWidth - BOUNDARY_PADDING;
-      const maxY = window.innerHeight - no.offsetHeight - BOUNDARY_PADDING;
       
-      noX = BOUNDARY_PADDING + Math.random() * maxX;
-      noY = BOUNDARY_PADDING + Math.random() * maxY;
+      const bw = no.offsetWidth;
+      const bh = no.offsetHeight;
+      const maxX = window.innerWidth - bw - BOUNDARY_PADDING;
+      const maxY = window.innerHeight - bh - BOUNDARY_PADDING;
       
-      no.style.left = noX + "px";
-      no.style.top = noY + "px";
+      // Teleport to opposite corner from cursor
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
       
+      if (mouseX < window.innerWidth / 2) {
+        noX = maxX - 50;
+      } else {
+        noX = BOUNDARY_PADDING + 50;
+      }
+      
+      if (mouseY < window.innerHeight / 2) {
+        noY = maxY - 50;
+      } else {
+        noY = BOUNDARY_PADDING + 50;
+      }
+      
+      updateNoButtonPosition();
       showToast(quips[Math.floor(Math.random() * quips.length)]);
     });
   </script>
